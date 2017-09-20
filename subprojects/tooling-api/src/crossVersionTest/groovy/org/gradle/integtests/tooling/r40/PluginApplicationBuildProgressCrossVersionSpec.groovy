@@ -24,7 +24,7 @@ import org.gradle.tooling.BuildException
 import org.gradle.tooling.ProjectConnection
 
 @ToolingApiVersion(">=2.5")
-@TargetGradleVersion(">=4.0")
+@TargetGradleVersion(">=4.0 <=4.1")
 class PluginApplicationBuildProgressCrossVersionSpec extends ToolingApiSpecification {
 
     def "generates plugin application events for single project build"() {

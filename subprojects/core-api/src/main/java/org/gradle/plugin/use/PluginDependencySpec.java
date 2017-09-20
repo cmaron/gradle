@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.gradle.plugin.use;
 
 import org.gradle.api.Incubating;
@@ -21,16 +20,15 @@ import org.gradle.api.Incubating;
 import javax.annotation.Nullable;
 
 /**
- * A mutable specification of a dependency on a plugin.
- * <p>
- * Can be used to specify the version of the plugin to use.
- * </p>
+ * A mutable specification of a dependency on a binary plugin.
+ *
+ * Can be used to specify the version of the plugin to use and disable plugin application.
  * <p>
  * See {@link PluginDependenciesSpec} for more information about declaring plugin dependencies.
  * </p>
  */
 @Incubating
-public interface PluginDependencySpec {
+public interface PluginDependencySpec extends PluginDependency {
 
     /**
      * Specify the version of the plugin to depend on.
@@ -40,11 +38,10 @@ public interface PluginDependencySpec {
      *     id "org.company.myplugin" version "1.0"
      * }
      * </pre>
-     * <p>
      * By default, dependencies have no (i.e. {@code null}) version.
+     * <p>
+     * Core plugins must not include a version number specification. Community plugins must include a version number specification.
      * </p>
-     * Core plugins must not include a version number specification.
-     * Community plugins must include a version number specification.
      *
      * @param version the version string ({@code null} for no specified version, which is the default)
      * @return this
@@ -52,10 +49,12 @@ public interface PluginDependencySpec {
     PluginDependencySpec version(@Nullable String version);
 
     /**
-     * Specifies whether the plugin should be applied to the current project. Otherwise it is only put
-     * on the project's classpath.
+     * Specifies whether the plugin should be applied to the current project.
+     *
+     * Otherwise it is only put on the project's classpath.
      * <p>
      * This is useful when reusing classes from a plugin or to apply a plugin to sub-projects:
+     * </p>
      *
      * <pre>
      * plugins {
